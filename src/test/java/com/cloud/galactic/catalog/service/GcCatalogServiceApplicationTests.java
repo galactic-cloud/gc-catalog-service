@@ -1,4 +1,4 @@
-package com.cloud.galactic.gccatalogservice;
+package com.cloud.galactic.catalog.service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

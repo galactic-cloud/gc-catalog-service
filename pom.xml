@@ -15,6 +15,10 @@
 	<description>GC Catalog Service</description>
 	<properties>
 		<java.version>11</java.version>
+		<openapi-generator-maven-plugin.version>6.2.0</openapi-generator-maven-plugin.version>
+		<springdoc-openapi-ui-version>1.6.5</springdoc-openapi-ui-version>
+		<jackson-databind-nullable-version>0.2.3</jackson-databind-nullable-version>
+		<swagger-core-version>2.2.3</swagger-core-version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -36,6 +40,35 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- Swagger UI -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>${springdoc-openapi-ui-version}</version>
+		</dependency>
+
+		<!-- Support libraries for OpenAPI Generator-->
+		<dependency>
+			<groupId>org.openapitools</groupId>
+			<artifactId>jackson-databind-nullable</artifactId>
+			<version>${jackson-databind-nullable-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.swagger.core.v3</groupId>
+			<artifactId>swagger-core</artifactId>
+			<version>${swagger-core-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.swagger.core.v3</groupId>
+			<artifactId>swagger-annotations</artifactId>
+			<version>${swagger-core-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.swagger.core.v3</groupId>
+			<artifactId>swagger-models</artifactId>
+			<version>${swagger-core-version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -51,6 +84,31 @@
 						</exclude>
 					</excludes>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.openapitools</groupId>
+				<artifactId>openapi-generator-maven-plugin</artifactId>
+				<version>${openapi-generator-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<inputSpec>${project.basedir}/src/main/resources/static/gc-catalog-swagger.yaml
+							</inputSpec>
+							<generatorName>spring</generatorName>
+							<!--  For revealing available options of configOptions-->
+							<!--  <configHelp>true</configHelp> -->
+							<apiPackage>com.cloud.galactic.openapi.api</apiPackage>
+							<modelPackage>com.cloud.galactic.openapi.model</modelPackage>
+							<configOptions>
+								<!--  Only generate the interface for api and model, exclude swagger configuration/controller-->
+								<interfaceOnly>true</interfaceOnly>
+							</configOptions>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
