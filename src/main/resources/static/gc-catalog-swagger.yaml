@@ -4,12 +4,15 @@ info:
   description: Book CRUD API.
   version: 1.0.0
 servers:
-- url: /v2
+  - url: /v2
 paths:
-  /book:
+  /category:
     get:
-      summary: Get Books
-      operationId: getBooks
+      tags:
+        - category
+      summary: Get Categorys
+      description: get all categorys
+      operationId: getAllCategory
       responses:
         200:
           description: successful operation
@@ -18,36 +21,166 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Book'
+                  $ref: '#/components/schemas/CategoryDto'
+        400:
+          description: Invalid status value
     post:
-      summary: Add a Book
-      operationId: addBook
+      tags:
+        - category
+      summary: Add a Category
+      operationId: addCategory
       requestBody:
-        description: Book to be added in shop
+        description: Category to be added in shop
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Book'
+              $ref: '#/components/schemas/CategoryDto'
         required: true
       responses:
         200:
-          description: Book Added
+          description: Category Added
           content:
             application/json:
               schema:
                 type: string
-      x-codegen-request-body-name: book
+        405:
+          description: Invalid input
+      x-codegen-request-body-name: category
+    put:
+      tags:
+        - category
+      summary: Update a Category
+      operationId: updateCategory
+      requestBody:
+        description: Update a existent category in shop
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryDto'
+        required: true
+      responses:
+        200:
+          description: Category Added
+          content:
+            application/json:
+              schema:
+                type: string
+        404:
+          description: Category not found
+        405:
+          description: Validation exception
+      x-codegen-request-body-name: category
+  /category/name/{categoryName}:
+    get:
+      tags:
+        - category
+      summary: get categories by name
+      operationId: GetCategoryByCategoryName
+      parameters:
+        - name: categoryName
+          in: path
+          description: "The name that needs to be fetched. "
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CategoryDto'
+        400:
+          description: Invalid status value
+  /category/parent/{parentCategoryId}:
+    get:
+      tags:
+        - category
+      summary: get categories by value
+      operationId: GetCategoryByParentID
+      parameters:
+        - name: parentCategoryId
+          in: path
+          description: "The value that needs to be fetched. "
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CategoryDto'
+        400:
+          description: Invalid status value
+  /category/{id}:
+    delete:
+      tags:
+        - category
+      summary: Delete category by id
+      operationId: DeleteCategoryById
+      parameters:
+        - name: id
+          in: path
+          description: "The id that needs to be fetched. "
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: string
+        "400":
+          description: Invalid status value
+    get:
+      tags:
+        - category
+      summary: Get category by id
+      operationId: GetCategoryById
+      parameters:
+        - name: id
+          in: path
+          description: "The id that needs to be fetched. "
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+        "400":
+          description: Invalid status value
 components:
   schemas:
-    Book:
+    CategoryDto:
       type: object
       properties:
-        id:
+        categoryid:
           type: integer
-          format: int64
-        title:
+          format: int32
+          example: 2
+        categoryName:
           type: string
-          example: Oathbringer
-        author:
+          example: Nước ngọt
+        parentCategoryId:
+          type: integer
+          format: int32
+          example: 1
+        description:
           type: string
-          example: Brandon Sanderson
+          example: Nước ngọt
+
