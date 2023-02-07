@@ -35,7 +35,7 @@ public class Bundle implements Serializable {
   @Column(name = "name", columnDefinition = "text")
   private String name;
 
-  @Column(name = "status")
-  private Boolean status;
+  @Column(name = "status", columnDefinition = "text")
+  private String status;
 }
 

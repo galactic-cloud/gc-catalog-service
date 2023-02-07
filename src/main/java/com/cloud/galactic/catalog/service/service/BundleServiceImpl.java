@@ -42,8 +42,17 @@ public class BundleServiceImpl implements BundleService{
     }
 
     @Override
-    public List<Bundle> getCategoriesByName(String name) {
-        return null;
+    public List<Bundle> findBundlesByName(String name) {
+        return bundleRespository.findByName(name);
+    }
+    @Override
+    public List<Bundle> findBundlesByNameGroup(String nameGroup) {
+        return bundleRespository.findBundlesByNameGroup(nameGroup);
+    }
+
+    @Override
+    public List<Bundle> findBundlesByStatus(String status) {
+        return bundleRespository.findBundlesByStatus(status);
     }
 
 }

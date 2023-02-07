@@ -8,6 +8,8 @@ servers:
 paths:
   /bundle:
     get:
+      tags:
+        - bundle
       summary: Get Bundles
       description: get all bundles
       operationId: getAllBundle
@@ -23,6 +25,8 @@ paths:
         400:
           description: Invalid status value
     post:
+      tags:
+        - bundle
       summary: Add a Bundle
       operationId: addBundle
       requestBody:
@@ -41,7 +45,146 @@ paths:
                 type: string
         405:
           description: Invalid input
-      x-codegen-request-body-name: book
+      x-codegen-request-body-name: bundle
+    put:
+      tags:
+        - bundle
+      summary: Update a Bundle
+      operationId: updateBundle
+      requestBody:
+        description: Update a existent bundle in shop
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BundleDto'
+        required: true
+      responses:
+        200:
+          description: Bundle Added
+          content:
+            application/json:
+              schema:
+                type: string
+        404:
+          description: Unit not found
+        405:
+          description: Validation exception
+      x-codegen-request-body-name: bundle
+  /bundle/name/{name}:
+    get:
+      tags:
+        - bundle
+      summary: get bundles by name
+      operationId: GetBundleByName
+      parameters:
+        - name: name
+          in: path
+          description: "The name that needs to be fetched. "
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BundleDto'
+        400:
+          description: Invalid status value
+  /bundle/nameGroup/{nameGroup}:
+    get:
+      tags:
+        - bundle
+      summary: get bundles by nameGroup
+      operationId: GetBundleByNameGroup
+      parameters:
+        - name: nameGroup
+          in: path
+          description: "The nameGroup that needs to be fetched. "
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BundleDto'
+        400:
+          description: Invalid status value
+  /bundle/status/{status}:
+    get:
+      tags:
+        - bundle
+      summary: get bundles by status
+      operationId: GetBundleByNameStatus
+      parameters:
+        - name: status
+          in: path
+          description: "The nameGroup that needs to be fetched. "
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BundleDto'
+        400:
+          description: Invalid status value
+  /bundle/{id}:
+    delete:
+      tags:
+        - bundle
+      summary: Delete bundle by id
+      operationId: DeleteBundleById
+      parameters:
+        - name: id
+          in: path
+          description: "The id that needs to be fetched. "
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: string
+        "400":
+          description: Invalid status value
+    get:
+      tags:
+        - bundle
+      summary: Get bundle by id
+      operationId: GetBundleById
+      parameters:
+        - name: id
+          in: path
+          description: "The id that needs to be fetched. "
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+        "400":
+          description: Invalid status value
 components:
   schemas:
     BundleDto:
@@ -57,4 +200,5 @@ components:
           type: string
           example: Chả lụa
         status:
-          type: boolean
+          type: string
+          example: Còn hàng

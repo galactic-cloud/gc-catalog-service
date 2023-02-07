@@ -1,7 +1,6 @@
 package com.cloud.galactic.catalog.service.controller;
 
 import com.cloud.galactic.catalog.service.entity.Bundle;
-import com.cloud.galactic.catalog.service.mapper.BundleMapper;
 import com.cloud.galactic.catalog.service.service.BundleService;
 import com.cloud.galactic.openapi.api.BundleApi;
 import com.cloud.galactic.openapi.model.BundleDto;
@@ -9,72 +8,72 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
+import java.lang.reflect.Type;
+import org.modelmapper.TypeToken;
+import org.modelmapper.ModelMapper;
+
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public abstract class BundelController implements BundleApi {
+public class BundelController implements BundleApi {
 
     private final BundleService bundleService;
-    private final BundleMapper bundleMapper;
-
+    private final ModelMapper modelMapper;
     @Override
     public ResponseEntity<String> addBundle(BundleDto bundleDto){
-        Bundle bundle1= bundleMapper.bundle(bundleDto);
-        bundleService.addBundle(bundle1);
-        return ResponseEntity.ok((bundle1.getName())+"is added");
+
+        Bundle bundle= modelMapper.map(bundleDto, Bundle.class);
+        bundleService.addBundle(bundle);
+        return ResponseEntity.ok((bundle.getName())+" thêm thành công");
+    }
+    @Override
+    public ResponseEntity<List<BundleDto>> getAllBundle(){
+        List<Bundle> dsBundle=bundleService.getListBundle();
+        Type listType = new TypeToken<List<BundleDto>>(){}.getType();
+        List<BundleDto> postDtoList = modelMapper.map(dsBundle,listType);
+        return ResponseEntity.ok(postDtoList);
+
+    }
+    @Override
+    public ResponseEntity<String> deleteBundleById(String id){
+        bundleService.deleteBundle(id);
+        return ResponseEntity.ok(" xóa thành công" + id);
+    }
+    @Override
+    public ResponseEntity<List<BundleDto>> getBundleByName(String name){
+        List<Bundle> dsBundle=bundleService.findBundlesByName(name);
+        Type listType = new TypeToken<List<BundleDto>>(){}.getType();
+        List<BundleDto> postDtoList = modelMapper.map(dsBundle,listType);
+        return ResponseEntity.ok(postDtoList);
     }
 
-//    @Override
-//    public ResponseEntity<List<BundleDto>> getAllBundle(){
-//        BundleDto bundleDto= new BundleDto();
-//        Bundle bundle= bundleMapper.bundle(bundleDto);
-//        List<Bundle> dsBundle= bundleService.getListBundle();
-//        List<BundleDto> dsList= new ArrayList<>();
-//        dsList.add(new BundleDto().id(bundle.getId()).nameGroup(bundle.getNameGroup()).name(bundle.getName()).status(bundle.getStatus()));
-//        return ResponseEntity.ok(dsList);
-       
-//        List<Bundle> dsBundle=bundleService.getListBundle();
-//////        return ResponseEntity.ok(dsBundle);
+    @Override
+    public ResponseEntity<String> updateBundle(BundleDto bundle){
+        Bundle bundle01= modelMapper.map(bundle, Bundle.class);
+        bundleService.updateBundle(bundle01);
+        return ResponseEntity.ok((bundle01.getName())+ " Cập nhật thành công");
 
-//    }
-//
-//    @Override
-//    public ResponseEntity<List<Bundle>> deleteBundleById(String id) {
-//        bundleService.deleteBundle(id);
-//        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-//
-//    }
-//
-//    @Override
-//    public ResponseEntity<List<Bundle>> getBundleByName(String name) {
-////        List<Bundle> dsBundle=bundleService.getCategoriesByName(name);
-////        return ResponseEntity.ok(dsBundle);
-//        bundleService.getCategoriesByName(name);
-//        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-//    }
-//
-//    @Override
-//    public ResponseEntity<Bundle> updateBundle(Bundle bundle) {
-////        Bundle bundle1=bundleService.updateBundle(bundle);
-////        return ResponseEntity.ok(bundle1);
-//        bundleService.updateBundle(bundle);
-//        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-//    }
-//
-//    @Override
-//    public ResponseEntity<List<Bundle>> getAllBundle(){
-////        List<Bundle> dsBundle=bundleService.getListBundle();
-////        return ResponseEntity.ok(dsBundle);
-//        bundleService.getListBundle();
-//        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-//    }
-//
-//    @Override
-//    public ResponseEntity<List<Bundle>> getBundleById(String id) {
-//        bundleService.getBundleById(id);
-//        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-//    }
+    }
+
+    @Override
+    public ResponseEntity<Object> getBundleById(String id){
+        Bundle bundle= bundleService.getBundleById(id);
+        return ResponseEntity.ok(bundle);
+    }
+    @Override
+    public ResponseEntity<List<BundleDto>> getBundleByNameGroup(String nameGroup){
+        List<Bundle> dsBundle=bundleService.findBundlesByNameGroup(nameGroup);
+        Type listType = new TypeToken<List<BundleDto>>(){}.getType();
+        List<BundleDto> postDtoList = modelMapper.map(dsBundle,listType);
+        return ResponseEntity.ok(postDtoList);
+    }
+    @Override
+    public ResponseEntity<List<BundleDto>> getBundleByNameStatus(String status){
+        List<Bundle> dsBundle=bundleService.findBundlesByStatus(status);
+        Type listType = new TypeToken<List<BundleDto>>(){}.getType();
+        List<BundleDto> postDtoList = modelMapper.map(dsBundle,listType);
+        return ResponseEntity.ok(postDtoList);
+    }
 
 }

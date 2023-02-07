@@ -14,5 +14,9 @@ public interface BundleService {
 
     public List<Bundle> getListBundle();
 
-    public List<Bundle> getCategoriesByName(String name);
+    public List<Bundle> findBundlesByName(String name);
+
+    public List<Bundle> findBundlesByNameGroup(String nameGroup);
+
+    public List<Bundle> findBundlesByStatus(String status);
 }
