@@ -6,13 +6,13 @@ info:
 servers:
 - url: /v2
 paths:
-  /bundle:
+  /unit:
     get:
       tags:
-        - bundle
-      summary: Get Bundles
-      description: get all bundles
-      operationId: getAllBundle
+        - unit
+      summary: Get Units
+      description: get all units
+      operationId: getAllUnit
       responses:
         200:
           description: successful operation
@@ -21,46 +21,46 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/BundleDto'
+                  $ref: '#/components/schemas/UnitDto'
         400:
           description: Invalid status value
     post:
       tags:
-        - bundle
-      summary: Add a Bundle
-      operationId: addBundle
+        - unit
+      summary: Add a Unit
+      operationId: addUnit
       requestBody:
-        description: Bundle to be added in shop
+        description: Unit to be added in shop
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BundleDto'
+              $ref: '#/components/schemas/UnitDto'
         required: true
       responses:
         200:
-          description: Bundle Added
+          description: Unit Added
           content:
             application/json:
               schema:
                 type: string
         405:
           description: Invalid input
-      x-codegen-request-body-name: bundle
+      x-codegen-request-body-name: unit
     put:
       tags:
-        - bundle
-      summary: Update a Bundle
-      operationId: updateBundle
+        - unit
+      summary: Update a Unit
+      operationId: updateUnit
       requestBody:
-        description: Update a existent bundle in shop
+        description: Update a existent unit in shop
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BundleDto'
+              $ref: '#/components/schemas/UnitDto'
         required: true
       responses:
         200:
-          description: Bundle Added
+          description: Unit Added
           content:
             application/json:
               schema:
@@ -69,13 +69,13 @@ paths:
           description: Unit not found
         405:
           description: Validation exception
-      x-codegen-request-body-name: bundle
-  /bundle/name/{name}:
+      x-codegen-request-body-name: unit
+  /unit/name/{name}:
     get:
       tags:
-        - bundle
-      summary: get bundles by name
-      operationId: GetBundleByName
+        - unit
+      summary: get units by name
+      operationId: GetUnitByName
       parameters:
         - name: name
           in: path
@@ -91,22 +91,23 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/BundleDto'
+                  $ref: '#/components/schemas/UnitDto'
         400:
           description: Invalid status value
-  /bundle/nameGroup/{nameGroup}:
+  /unit/value/{value}:
     get:
       tags:
-        - bundle
-      summary: get bundles by nameGroup
-      operationId: GetBundleByNameGroup
+        - unit
+      summary: get units by value
+      operationId: GetUnitByValue
       parameters:
-        - name: nameGroup
+        - name: value
           in: path
-          description: "The nameGroup that needs to be fetched. "
+          description: "The value that needs to be fetched. "
           required: true
           schema:
-            type: string
+            type: integer
+            format: int32
       responses:
         200:
           description: successful operation
@@ -115,39 +116,15 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/BundleDto'
+                  $ref: '#/components/schemas/UnitDto'
         400:
           description: Invalid status value
-  /bundle/status/{status}:
-    get:
-      tags:
-        - bundle
-      summary: get bundles by status
-      operationId: GetBundleByNameStatus
-      parameters:
-        - name: status
-          in: path
-          description: "The nameGroup that needs to be fetched. "
-          required: true
-          schema:
-            type: string
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/BundleDto'
-        400:
-          description: Invalid status value
-  /bundle/{id}:
+  /unit/{id}:
     delete:
       tags:
-        - bundle
-      summary: Delete bundle by id
-      operationId: DeleteBundleById
+        - unit
+      summary: Delete unit by id
+      operationId: DeleteUnitById
       parameters:
         - name: id
           in: path
@@ -166,9 +143,9 @@ paths:
           description: Invalid status value
     get:
       tags:
-        - bundle
-      summary: Get bundle by id
-      operationId: GetBundleById
+        - unit
+      summary: Get unit by id
+      operationId: GetUnitById
       parameters:
         - name: id
           in: path
@@ -187,18 +164,16 @@ paths:
           description: Invalid status value
 components:
   schemas:
-    BundleDto:
+    UnitDto:
       type: object
       properties:
         id:
           type: string
-          example: B0001
-        nameGroup:
-          type: string
-          example: Chả
+          example: U0001
         name:
           type: string
-          example: Chả lụa
-        status:
-          type: string
-          example: Còn hàng
+          example: Chai
+        value:
+          type: integer
+          format: int32
+          example: 1
