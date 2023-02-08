@@ -1,12 +1,10 @@
 package com.cloud.galactic.catalog.service.entity;
 
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.annotation.Generated;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -26,6 +24,8 @@ import java.io.Serializable;
 public class Bundle implements Serializable {
 
   @Id
+  @GeneratedValue(generator = "my_generator")
+  @GenericGenerator(name = "my_generator", strategy = "com.cloud.galactic.catalog.service.generator.GeneratorBundle")
   @Column(name = "id")
   private String id;
 
