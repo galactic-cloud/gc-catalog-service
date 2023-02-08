@@ -43,16 +43,16 @@ public class BundleServiceImpl implements BundleService{
 
     @Override
     public List<Bundle> findBundlesByName(String name) {
-        return bundleRespository.findByName(name);
+        return bundleRespository.findByNameIgnoreCase(name);
     }
     @Override
     public List<Bundle> findBundlesByNameGroup(String nameGroup) {
-        return bundleRespository.findBundlesByNameGroup(nameGroup);
+        return bundleRespository.findBundlesByNameGroupIgnoreCase(nameGroup);
     }
 
     @Override
     public List<Bundle> findBundlesByStatus(String status) {
-        return bundleRespository.findBundlesByStatus(status);
+        return bundleRespository.findBundlesByStatusIgnoreCase(status);
     }
 
 }

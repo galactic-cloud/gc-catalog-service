@@ -10,8 +10,8 @@ import java.util.List;
 
 @Repository
 public interface BundleRespository  extends JpaRepository<Bundle, String> {
-    List<Bundle> findByName(String name);
-    List<Bundle> findBundlesByNameGroup(String nameGroup);
-    List<Bundle> findBundlesByStatus(String status);
+    List<Bundle> findByNameIgnoreCase(String name);
+    List<Bundle> findBundlesByNameGroupIgnoreCase(String nameGroup);
+    List<Bundle> findBundlesByStatusIgnoreCase(String status);
 
 }
