@@ -25,8 +25,12 @@ public class CategoryController implements CategoriesApi {
     public ResponseEntity<String> addCategory(AddCategoryRequest category){
 
         Category category1= modelMapper.map(category, Category.class);
-        category1.setParentCategoryId(categoryService.getCategoryById(category.getParentCategoryId()));
-        categoryService.addCategory(category1);
+        if (category.getParentCategoryId()==null){
+            categoryService.addCategory(category1);
+        } else {
+            category1.setParentCategoryId(categoryService.getCategoryById(category.getParentCategoryId()));
+            categoryService.addCategory(category1);
+        }
         return ResponseEntity.ok("Thêm thành công");
     }
 

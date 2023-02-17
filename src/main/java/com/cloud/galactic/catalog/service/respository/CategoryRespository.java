@@ -13,7 +13,7 @@ import java.util.List;
 public interface CategoryRespository extends JpaRepository<Category, Integer> {
     @Query("select distinct p from Category p " +
             "left join fetch p.parentCategoryId pp " +
-            "left join fetch p.subCategory ch " +
+            "left join fetch p.subCategories ch " +
             "where pp is null")
     List<Category> findAll();
     

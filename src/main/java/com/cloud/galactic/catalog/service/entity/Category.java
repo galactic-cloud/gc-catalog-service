@@ -49,7 +49,7 @@ public class Category {
   @Column(name = "description", columnDefinition = "text")
   private String description;
   @OneToMany(mappedBy = "parentCategoryId", fetch = FetchType.LAZY)
-  private List<Category> subCategory= new ArrayList<>();
+  private List<Category> subCategories= new ArrayList<>();
 
 }
 
