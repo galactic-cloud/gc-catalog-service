@@ -4,7 +4,7 @@ info:
   description: Book CRUD API.
   version: 1.0.0
 servers:
-  - url: /api/v2
+  - url: https://api.onepos.com.vn/catalog-service/api/v2
 paths:
   /categories:
     get:
