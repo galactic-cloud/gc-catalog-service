@@ -1,4 +1,29 @@
 server:
-  port : 8081
+  port : 8083
   servlet:
     context-path: /catalog-service
+spring:
+  datasource:
+    url: jdbc:postgresql://103.124.92.171:30000/catalog_db
+    username: catalog_dev
+    password: catalog_dev
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
+        id:
+          new_generator_mappings: true
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      ddl-auto: update
+  devtools:
+    add-properties: true
+  jackson:
+    serialization:
+      indent-output: true
+    default-property-inclusion: non_empty
+logging.level.org.hibernate.SQL: DEBUG
+logging.level.org.hibernate.type.descriptor.sql.BasicBinder: TRACE
