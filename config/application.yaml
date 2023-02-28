@@ -4,9 +4,9 @@ server:
     context-path: /catalog-service
 spring:
   datasource:
-    url: jdbc:postgresql://103.124.92.171:30000/catalog_db
-    username: catalog_dev
-    password: catalog_dev
+    url: jdbc:postgresql://datnguyenv1.ddns.net:30000/catalog
+    username: catalog
+    password: password
     driver-class-name: org.postgresql.Driver
   jpa:
     show-sql: true
